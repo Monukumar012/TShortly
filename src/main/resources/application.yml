@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: tshortly-url-service
+
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO

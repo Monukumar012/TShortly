@@ -1,6 +1,6 @@
 package com.tshortly.notification.channel;
 
-import com.tshortly.notification.entity.NotificationMessage;
+import com.tshortly.notification.model.NotificationMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

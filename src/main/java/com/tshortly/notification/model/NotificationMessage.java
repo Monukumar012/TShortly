@@ -1,14 +1,15 @@
-package com.tshortly.notification.entity;
+package com.tshortly.notification.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @AllArgsConstructor
 @Getter
 public class NotificationMessage {
     private final Long userId;
     private final String message;
-    private final Instant createdAt;
+    private final ZonedDateTime createdAt;
+    private final String eventId;
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Primary
 public class KafkaUrlEventPublisher implements UrlEventPublisher{
     private static final String TOPIC = "short-url-events";
-    private final KafkaTemplate<String, ShortUrlAccessedEvent> kafkaTemplate;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
     @Override
     public void publish(ShortUrlAccessedEvent event) {
         kafkaTemplate.send(TOPIC, event.getShortUrlCode(), event);

@@ -1,12 +1,11 @@
-package com.tshortly.notification.service;
+package com.tshortly.notification.orchestrator;
 
 import com.tshortly.events.url.ShortUrlAccessedEvent;
 import com.tshortly.notification.channel.NotificationChannel;
-import com.tshortly.notification.entity.NotificationMessage;
+import com.tshortly.notification.model.NotificationMessage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
@@ -18,7 +17,8 @@ public class NotificationOrchestrator {
                 new NotificationMessage(
                         event.getOwnerId(),
                         "Your short URL '" + event.getShortUrlCode() + "' was accessed",
-                        Instant.now()
+                        ZonedDateTime.now(),
+                        event.getEventId().toString()
                 );
 
         for(NotificationChannel channel: channels) {

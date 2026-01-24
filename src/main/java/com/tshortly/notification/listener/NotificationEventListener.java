@@ -1,7 +1,7 @@
 package com.tshortly.notification.listener;
 
 import com.tshortly.events.url.ShortUrlAccessedEvent;
-import com.tshortly.notification.service.NotificationOrchestrator;
+import com.tshortly.notification.orchestrator.NotificationOrchestrator;
 import lombok.AllArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;

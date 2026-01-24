@@ -28,3 +28,14 @@ spring:
         spring.json.trusted.packages: com.tshortly.events.url
         spring.json.use.type.headers: false
         spring.json.value.default.type: com.tshortly.events.url.ShortUrlAccessedEvent
+
+
+app:
+  kafka:
+    retry:
+      max-attempts: 3
+      initial-intervals-ms: 2000
+      multiplier: 2.0
+      max-intervals-ms: 30000
+    dlt:
+      suffix: ".DLT"

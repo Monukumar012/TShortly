@@ -1,0 +1,14 @@
+package com.tshortly.notification.config;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
+
+@Getter @Setter
+@Configuration
+@ConfigurationProperties(prefix = "app.kafka.consumer.group-id")
+public class KafkaConsumerGroupProperties {
+    private String notification;
+    private String notificationDlt;
+}

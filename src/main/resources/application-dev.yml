@@ -32,6 +32,12 @@ spring:
 
 app:
   kafka:
+    topics:
+      short-url-events: short-url-events
+    consumer:
+      group-id:
+        notification: notification-service
+        notification-dlt: notification-dlt-service
     retry:
       max-attempts: 3
       initial-intervals-ms: 2000

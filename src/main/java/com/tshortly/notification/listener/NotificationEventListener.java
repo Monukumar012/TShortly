@@ -12,8 +12,8 @@ public class NotificationEventListener {
     private final NotificationOrchestrator orchestrator;
 
     @KafkaListener(
-            topics = "short-url-events",
-            groupId = "notification-service"
+            topics = "#{@kafkaTopicProperties.shortUrlEvents}",
+            groupId = "#{@kafkaConsumerGroupProperties.notification}"
     )
     public void onMessage(ShortUrlAccessedEvent event) {
         orchestrator.handle(event);

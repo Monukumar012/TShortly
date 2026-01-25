@@ -14,16 +14,17 @@ import java.time.ZonedDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FailedEventEntity {
+public class FailedEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String originalTopic;
     private String eventKey;
     @Column(columnDefinition = "TEXT")
-    private String payload;
+    private String payloadJson;
     @Column(columnDefinition = "TEXT")
-    private String errorMessage;
+    private String exceptionMessage;
+    private String exceptionClass;
     private boolean replayed;
     private ZonedDateTime createdAt;
 

@@ -45,3 +45,6 @@ app:
       max-intervals-ms: 30000
     dlt:
       suffix: ".DLT"
+  url:
+    shortening:
+      max-attempts: 10

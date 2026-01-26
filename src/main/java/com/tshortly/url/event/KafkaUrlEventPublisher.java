@@ -1,14 +1,14 @@
 package com.tshortly.url.event;
 
 import com.tshortly.events.url.ShortUrlAccessedEvent;
-import com.tshortly.notification.config.KafkaTopicProperties;
-import lombok.AllArgsConstructor;
+import com.tshortly.notification.config.property.KafkaTopicProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Primary
 public class KafkaUrlEventPublisher implements UrlEventPublisher{
     private final KafkaTopicProperties kafkaTopicProperties;

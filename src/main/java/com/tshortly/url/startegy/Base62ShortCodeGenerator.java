@@ -1,11 +1,11 @@
 package com.tshortly.url.startegy;
 
 import com.tshortly.common.utlity.Base62;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Component("base62ShortCodeGenerator")
 public class Base62ShortCodeGenerator implements ShortCodeGenerator{
     private final SequenceProvider sequenceProvider;

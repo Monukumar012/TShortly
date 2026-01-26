@@ -1,5 +1,8 @@
 package com.tshortly.notification.config;
 
+import com.tshortly.exception.NonRetryableException;
+import com.tshortly.notification.config.property.KafkaDLTProperties;
+import com.tshortly.notification.config.property.KafkaRetryProperties;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,18 @@ public class KafkaConsumerConfig {
             KafkaDLTProperties kafkaDLTProperties
     ) {
         // 1. Where to send failed messages
+        DefaultErrorHandler errorHandler = getDefaultErrorHandler(kafkaTemplate, kafkaRetryProperties, kafkaDLTProperties);
+        errorHandler.addNotRetryableExceptions(NonRetryableException.class, IllegalArgumentException.class, NullPointerException.class);
+        errorHandler.addRetryableExceptions(SocketTimeoutException.class);
+
+        // 3. Attach to listener
+        ConcurrentKafkaListenerContainerFactory<Object, Object> containerFactory = new ConcurrentKafkaListenerContainerFactory<>();
+        containerFactory.setConsumerFactory(consumerFactory);
+        containerFactory.setCommonErrorHandler(errorHandler);
+        return containerFactory;
+    }
+
+    private DefaultErrorHandler getDefaultErrorHandler(KafkaTemplate<String, Object> kafkaTemplate, KafkaRetryProperties kafkaRetryProperties, KafkaDLTProperties kafkaDLTProperties) {
         DeadLetterPublishingRecoverer recoverer =
                 new DeadLetterPublishingRecoverer(kafkaTemplate,
                         ((record, exception) ->
@@ -33,14 +48,6 @@ public class KafkaConsumerConfig {
         ExponentialBackOff backOff = new ExponentialBackOff(kafkaRetryProperties.getInitialIntervalMs(), kafkaRetryProperties.getMaxAttempts());
         backOff.setMaxInterval(kafkaRetryProperties.getMaxIntervalMs());
         backOff.setMaxElapsedTime(kafkaRetryProperties.getInitialIntervalMs() * kafkaRetryProperties.getMaxAttempts());
-        DefaultErrorHandler errorHandler = new DefaultErrorHandler(recoverer, backOff);
-        errorHandler.addNotRetryableExceptions(IllegalArgumentException.class, NullPointerException.class);
-        errorHandler.addRetryableExceptions(SocketTimeoutException.class);
-
-        // 3. Attach to listener
-        ConcurrentKafkaListenerContainerFactory<Object, Object> containerFactory = new ConcurrentKafkaListenerContainerFactory<>();
-        containerFactory.setConsumerFactory(consumerFactory);
-        containerFactory.setCommonErrorHandler(errorHandler);
-        return containerFactory;
+        return new DefaultErrorHandler(recoverer, backOff);
     }
 }

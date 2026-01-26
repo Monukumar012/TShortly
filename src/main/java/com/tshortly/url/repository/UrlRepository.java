@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UrlRepository extends JpaRepository<ShortUrl, Long> {
     Optional<ShortUrl> findByShortUrlCode(String shortUrlCode);
+    Optional<ShortUrl> findByOwnerIdAndLongUrlAndTrackableTrue(Long ownerId, String longUrl);
     boolean existsByShortUrlCode(String shortUrlCode);
 }

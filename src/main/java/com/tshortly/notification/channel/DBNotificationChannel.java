@@ -5,13 +5,11 @@ import com.tshortly.notification.enums.NotificationStatus;
 import com.tshortly.notification.enums.NotificationType;
 import com.tshortly.notification.model.NotificationMessage;
 import com.tshortly.notification.repository.NotificationRepository;
-import lombok.AllArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class DBNotificationChannel implements NotificationChannel{
     private final NotificationRepository notificationRepository;
     @Override

@@ -1,21 +1,31 @@
 package com.tshortly.notification.listener;
 
 import com.tshortly.events.url.ShortUrlAccessedEvent;
+import com.tshortly.exception.NonRetryableException;
 import com.tshortly.notification.orchestrator.NotificationOrchestrator;
-import lombok.AllArgsConstructor;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Set;
+
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationEventListener {
     private final NotificationOrchestrator orchestrator;
+    private final Validator validator;
 
     @KafkaListener(
             topics = "#{@kafkaTopicProperties.shortUrlEvents}",
             groupId = "#{@kafkaConsumerGroupProperties.notification}"
     )
     public void onMessage(ShortUrlAccessedEvent event) {
+        Set<ConstraintViolation<ShortUrlAccessedEvent>> violations = validator.validate(event);
+        if(!violations.isEmpty()) {
+            throw new NonRetryableException(violations.iterator().next().getMessage());
+        }
         orchestrator.handle(event);
     }
 }

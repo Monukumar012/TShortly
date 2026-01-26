@@ -2,10 +2,10 @@ package com.tshortly.notification.listener;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tshortly.events.url.ShortUrlAccessedEvent;
-import com.tshortly.notification.config.KafkaDLTProperties;
+import com.tshortly.notification.config.property.KafkaDLTProperties;
 import com.tshortly.notification.dlq.entity.FailedEvent;
 import com.tshortly.notification.dlq.repository.FailedEventRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationDLTListener {
     private final FailedEventRepository failedEventRepository;
     private final ObjectMapper objectMapper;

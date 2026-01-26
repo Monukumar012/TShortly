@@ -6,7 +6,7 @@ public class UrlNotFoundException extends RuntimeException{
     }
 
     public UrlNotFoundException(String message) {
-        super("URL not found for code: " +message);
+        super(message);
     }
 
 }

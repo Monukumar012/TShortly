@@ -6,13 +6,13 @@ import com.tshortly.notification.dto.NotificationResponse;
 import com.tshortly.notification.entity.NotificationEntity;
 import com.tshortly.notification.enums.NotificationStatus;
 import com.tshortly.notification.repository.NotificationRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationService {
     private final NotificationRepository notificationRepository;
 

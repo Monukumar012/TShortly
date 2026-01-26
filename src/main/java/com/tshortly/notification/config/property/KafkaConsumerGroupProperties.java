@@ -1,4 +1,4 @@
-package com.tshortly.notification.config;
+package com.tshortly.notification.config.property;
 
 import lombok.Getter;
 import lombok.Setter;

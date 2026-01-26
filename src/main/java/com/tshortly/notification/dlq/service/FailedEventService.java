@@ -5,12 +5,12 @@ import com.tshortly.events.url.ShortUrlAccessedEvent;
 import com.tshortly.exception.EntityNotFoundException;
 import com.tshortly.notification.dlq.entity.FailedEvent;
 import com.tshortly.notification.dlq.repository.FailedEventRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class FailedEventService {
     private final ObjectMapper objectMapper;
     private final FailedEventRepository failedEventRepository;

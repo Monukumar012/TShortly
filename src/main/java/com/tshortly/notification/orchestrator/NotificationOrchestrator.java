@@ -3,13 +3,13 @@ package com.tshortly.notification.orchestrator;
 import com.tshortly.events.url.ShortUrlAccessedEvent;
 import com.tshortly.notification.channel.NotificationChannel;
 import com.tshortly.notification.model.NotificationMessage;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationOrchestrator {
     private final List<NotificationChannel> channels;
     public void handle(ShortUrlAccessedEvent event) {

@@ -6,22 +6,23 @@ import com.tshortly.url.event.UrlEventPublisher;
 import com.tshortly.url.exception.UrlNotFoundException;
 import com.tshortly.url.repository.UrlRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class UrlResolutionService {
     private final UrlRepository urlRepository;
     private final UrlEventPublisher urlEventPublisher;
 
     public String resolve(String shortUrlCode) {
-        ShortUrl shortUrl = urlRepository.findByShortUrlCode(shortUrlCode).orElseThrow(() -> new UrlNotFoundException(shortUrlCode));
+        ShortUrl shortUrl = urlRepository.findByShortUrlCode(shortUrlCode).orElseThrow(UrlNotFoundException::new);
         // Publish the event
         if(shortUrl.isTrackable()) {
-            ShortUrlAccessedEvent shortUrlAccessedEvent = new ShortUrlAccessedEvent(UUID.randomUUID(), shortUrl.getShortUrlCode(), shortUrl.getOwnerId(), Instant.now());
+            ShortUrlAccessedEvent shortUrlAccessedEvent = new ShortUrlAccessedEvent(UUID.randomUUID(), shortUrl.getShortUrlCode(), shortUrl.getOwnerId(), ZonedDateTime.now());
             urlEventPublisher.publish(shortUrlAccessedEvent);
         }
         return shortUrl.getLongUrl();

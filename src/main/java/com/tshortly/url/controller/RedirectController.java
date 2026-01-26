@@ -1,11 +1,11 @@
 package com.tshortly.url.controller;
 
 import com.tshortly.url.service.UrlResolutionService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
 public class RedirectController {
 

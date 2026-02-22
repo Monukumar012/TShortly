@@ -1,4 +1,4 @@
-package com.tshortly.url.startegy;
+package com.tshortly.url.startegy.sequenceprovider;
 
 import org.springframework.stereotype.Component;
 

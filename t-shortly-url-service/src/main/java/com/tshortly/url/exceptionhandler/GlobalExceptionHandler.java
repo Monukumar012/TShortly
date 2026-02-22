@@ -3,6 +3,7 @@ import com.tshortly.framework.api.ApiMessage;
 import com.tshortly.framework.api.ApiMessageFactory;
 import com.tshortly.framework.api.ApiResponse;
 import com.tshortly.framework.expcetion.EntityNotFoundException;
+import com.tshortly.url.exception.AliasNotAvailableException;
 import com.tshortly.url.exception.UrlNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,5 +42,11 @@ public class GlobalExceptionHandler {
         List<ApiMessage> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(fieldError -> ApiMessage.of(fieldError.getCode(), fieldError.getDefaultMessage())).toList();
         return ResponseEntity.badRequest().body(ApiResponse.failure(errors));
+    }
+
+    @ExceptionHandler(AliasNotAvailableException.class)
+    public ResponseEntity<ApiResponse<?>> handleAliasNotAvailableException(AliasNotAvailableException ex) {
+        ApiMessage error = apiMessageFactory.of("shortUrl.alias.notAvailable");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(error));
     }
 }

@@ -25,6 +25,13 @@ spring:
       properties:
         spring.json.use.type.headers: false
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2000
+    cache:
+      type: redis
 
 app:
   kafka:
@@ -33,3 +40,5 @@ app:
   url:
     shortening:
       max-attempts: 10
+  redis:
+    global-ttl-minutes: 60

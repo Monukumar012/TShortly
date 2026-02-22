@@ -3,10 +3,11 @@ package com.tshortly.url.service;
 import com.tshortly.url.dto.CreateShortUrlRequest;
 import com.tshortly.url.dto.ShortUrlResponse;
 import com.tshortly.url.entity.ShortUrl;
+import com.tshortly.url.exception.AliasNotAvailableException;
 import com.tshortly.url.exception.CodeGenerationException;
 import com.tshortly.url.mapper.ShortUrlMapper;
 import com.tshortly.url.repository.UrlRepository;
-import com.tshortly.url.startegy.ShortCodeGenerator;
+import com.tshortly.url.startegy.shortcodegenerator.ShortCodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -31,10 +32,23 @@ public class UrlShorteningService {
                 return ShortUrlMapper.toResponse(existingShortUrl.get());
             }
         }
-        String shortUrlCode = generateUniqueShortUrlCode();
+        String shortUrlCode = getShortUrlCode(createShortUrlRequest.getAlias());
         ShortUrl shortUrl = ShortUrl.create(shortUrlCode, createShortUrlRequest.getLongUrl(), ownerId, finalTrackable);
         ShortUrl savedShortUrl = urlRepository.save(shortUrl);
         return ShortUrlMapper.toResponse(savedShortUrl);
+    }
+
+    public String getShortUrlCode(String alias) {
+        String shortUrlCode;
+        if(alias != null) {
+            if(urlRepository.existsByShortUrlCode(alias)) {
+                throw new AliasNotAvailableException("Alias already exists");
+            }
+            shortUrlCode =  alias;
+        } else {
+            shortUrlCode = generateUniqueShortUrlCode();
+        }
+        return shortUrlCode;
     }
 
     private String generateUniqueShortUrlCode() {

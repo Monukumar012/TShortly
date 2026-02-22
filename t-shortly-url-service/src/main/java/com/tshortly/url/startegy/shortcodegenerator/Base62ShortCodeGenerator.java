@@ -1,6 +1,7 @@
-package com.tshortly.url.startegy;
+package com.tshortly.url.startegy.shortcodegenerator;
 
 import com.tshortly.framework.util.Base62;
+import com.tshortly.url.startegy.sequenceprovider.SequenceProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

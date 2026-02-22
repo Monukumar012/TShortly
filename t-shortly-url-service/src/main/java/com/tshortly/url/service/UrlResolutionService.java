@@ -5,8 +5,8 @@ import com.tshortly.url.entity.ShortUrl;
 import com.tshortly.url.event.UrlEventPublisher;
 import com.tshortly.url.exception.UrlNotFoundException;
 import com.tshortly.url.repository.UrlRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -18,6 +18,7 @@ public class UrlResolutionService {
     private final UrlRepository urlRepository;
     private final UrlEventPublisher urlEventPublisher;
 
+    @Cacheable(value = "shortUrl", keyGenerator = "cacheKeyGenerator")
     public String resolve(String shortUrlCode) {
         ShortUrl shortUrl = urlRepository.findByShortUrlCode(shortUrlCode).orElseThrow(UrlNotFoundException::new);
         // Publish the event

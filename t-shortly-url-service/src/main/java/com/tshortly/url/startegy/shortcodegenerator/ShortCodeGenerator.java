@@ -1,4 +1,4 @@
-package com.tshortly.url.startegy;
+package com.tshortly.url.startegy.shortcodegenerator;
 
 
 public interface ShortCodeGenerator {

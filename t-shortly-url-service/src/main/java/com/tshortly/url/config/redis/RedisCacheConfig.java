@@ -10,7 +10,7 @@ import java.time.Duration;
 @Configuration
 public class RedisCacheConfig {
 
-    @Value("app.redis.global-ttl-minutes")
+    @Value("${app.redis.global-ttl-minutes}")
     private long globalTtlMinutes;
 
     @Bean
